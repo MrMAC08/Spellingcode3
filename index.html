@@ -6,39 +6,26 @@
     <title>Year Three Vocabulary Station</title>
     <style>
         :root { --primary: #2563eb; --success: #059669; --danger: #dc2626; --bg: #f1f5f9; --card-bg: #ffffff; --text: #0f172a; }
-        
         body { font-family: 'Segoe UI', system-ui, sans-serif; background-color: var(--bg); color: var(--text); margin: 0; padding: 10px; }
-        
         .main-wrapper { width: 100%; max-width: 850px; margin: 15px auto; display: block; }
-        
         .student-card { background: var(--card-bg); border-radius: 16px; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05); padding: 30px; text-align: center; box-sizing: border-box; display: block; position: relative; }
-        
         .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; width: 100%; margin-top: 15px; clear: both; }
-        
         .menu-btn { background-color: #f8fafc; color: var(--text); border: 2px solid #e2e8f0; padding: 16px; font-size: 1.02rem; border-radius: 10px; cursor: pointer; font-weight: bold; text-align: left; display: flex; flex-direction: column; justify-content: space-between; box-sizing: border-box; width: 100%; position: relative; z-index: 10; transition: all 0.2s; }
         .menu-btn:hover { background-color: var(--primary); color: white; border-color: var(--primary); transform: translateY(-2px); }
-        
         .top-navigation-bar { display: block; width: 100%; border-bottom: 2px solid #e2e8f0; padding-bottom: 12px; margin-bottom: 20px; text-align: left; box-sizing: border-box; }
         .nav-inner-layout { display: flex; justify-content: space-between; align-items: center; }
-        
         .back-nav-btn { background: #e2e8f0; color: #475569; border: none; padding: 8px 14px; font-size: 0.9rem; font-weight: bold; border-radius: 6px; cursor: pointer; transition: background 0.2s; }
         .back-nav-btn:hover { background: #cbd5e1; color: var(--text); }
-        
         .target-word { font-size: 4.2rem; font-weight: 800; letter-spacing: 1px; margin: 15px 0; transition: opacity 0.5s ease; color: var(--text); }
         .hidden-word { opacity: 0 !important; }
-        
         .rule-box { background: #f8fafc; border-left: 5px solid var(--primary); padding: 20px; border-radius: 0 8px 8px 0; font-size: 1.15rem; margin: 20px 0; width: 100%; box-sizing: border-box; text-align: left; line-height: 1.6; }
         .rule-box strong { color: var(--primary); }
         .rule-box ul { margin: 8px 0; padding-left: 20px; }
-        
         .lock-container { background: #fef2f2; border: 2px dashed var(--danger); border-radius: 8px; padding: 15px; margin: 0 auto; width: 100%; max-width: 400px; box-sizing: border-box; }
-        
         .student-input { font-size: 1.5rem; padding: 12px; text-align: center; border: 3px solid #cbd5e1; border-radius: 8px; outline: none; width: 80%; max-width: 350px; display: inline-block; box-sizing: border-box; }
         .teacher-password-input { font-size: 1.3rem; padding: 8px; text-align: center; border: 3px solid #cbd5e1; border-radius: 8px; outline: none; width: 220px; display: inline-block; box-sizing: border-box; }
-        
         button.action-btn { background-color: var(--primary); color: white; border: none; padding: 12px 28px; font-size: 1.1rem; font-weight: bold; border-radius: 8px; cursor: pointer; margin-top: 20px; display: inline-block; }
         button.action-btn:hover { background-color: #1d4ed8; }
-        
         .sentence-prompt { font-size: 1.6rem; margin-bottom: 25px; line-height: 1.6; text-align: center; }
         .feedback { font-size: 1.2rem; font-weight: bold; margin-top: 15px; }
         .feedback.success { color: var(--success); }
@@ -53,132 +40,529 @@
 
 <script>
     const MASTER_SPELLING_RULES = {
-        "heart_words": "🏫 <strong>Heart Words Lesson:</strong><br>Heart Words contain tricky parts that don't follow regular spelling rules. We have to learn these unexpected letter choices by heart!<br><ul><li>Examples: any, many, also, their, through, bought, really, gone, always, house, eyes.</li></ul>",
-        "r_controlled_ar_or": "🏫 <strong>R-Controlled Vowels 'ar' and 'or' Lesson (List 18):</strong><br>When the letter 'r' sits directly after a vowel, it controls it and changes its sound to /ar/ (as in <em>farm</em>) or /or/ (as in <em>for</em>).<br><ul><li>Examples: dark, start, garden, carpet, shark, corn, popcorn, storm, report, morning.</li></ul>",
-        "final_y_sounds": "🏫 <strong>Final 'y' as /i/ or /e/ Lesson (List 19):</strong><br>The letter 'y' at the end of a 1-syllable word represents the long /i/ sound. At the end of a 2-syllable word, it represents long /e/.<br><ul><li>Examples (long /i/): cry, why, try, fly, sky.</li><li>Examples (long /e/): baby, happy, funny, family, party, lucky.</li></ul>",
-        "ee_ea_vowels": "🏫 <strong>Vowel Teams 'ee' and 'ea' Lesson (List 20):</strong><br>Both vowel teams 'ee' and 'ea' join together to represent the long /e/ sound inside base words.<br><ul><li>Examples: green, street, sleep, weekend, beach, dream, leaf, clean, speak.</li></ul>",
-        "oa_ow_vowels": "🏫 <strong>Vowel Teams 'oa' and 'ow' Lesson (List 21):</strong><br>The vowel teams 'oa' (usually in the middle) and 'ow' (often at the end) both represent the long /o/ sound.<br><ul><li>Examples: boat, road, coat, throat, float, show, grow, window, yellow, below.</li></ul>",
-        "homophones_one": "🏫 <strong>Homophones 1 Lesson (List 22):</strong><br>Homophones sound identical to another word when spoken, but feature completely different meanings and spelling layouts.<br><ul><li>Examples: to/too/two, be/bee, by/buy, for/four, sail/sale, mail/male, meat/meet, weak/week.</li></ul>",
-        "oo_vowel_sounds": "🏫 <strong>Vowel Team 'oo' Two Sounds Lesson (List 23):</strong><br>The team 'oo' can make two distinct sounds: a short book sound as in <em>good</em>, or a long ooo sound as in <em>food</em>.<br><ul><li>Examples (/oo/ as in good): school, took, book, wood, shook.</li><li>Examples (/oo/ as in food): room, soon, moon, spoon, balloon, igloo.</li></ul>",
-        "consonant_clusters": "🏫 <strong>3-Letter Consonant Clusters Lesson (List 25):</strong><br>In clusters like str-, spr-, scr-, and spl-, three separate consonants blend together but each letter keeps its sound.<br><ul><li>Examples: strap, street, stream, sprint, spray, sprout, scrub, scream, scratch, splash, split.</li></ul>",
-        "oi_oy_vowels": "🏫 <strong>Vowel Teams 'oi' and 'oy' Lesson (List 26):</strong><br>Both teams make the /oy/ sound. Use 'oi' in the middle of words/syllables and 'oy' at the very end of a word.<br><ul><li>Examples: boil, moist, point, join, noise, voice, toy, boy, enjoy, destroy.</li></ul>",
-        "r_controlled_er_ir_ur": "🏫 <strong>R-Controlled Vowels 'er', 'ir', 'ur' Lesson (List 28):</strong><br>When followed by the letter 'r', the vowels 'e', 'i', and 'u' all transform into the exact same vocal sound: /er/!<br><ul><li>Examples: turn, hurt, church, girl, first, shirt, bird, her, fern, germ, nerd.</li></ul>",
-        "vccv_syllable_division": "🏫 <strong>Syllable Division - VCCV Layout Lesson (List 29):</strong><br>When two consonants are trapped between two vowels, split the word right between the consonants (VC/CV) to spell it out layer by layer.<br><ul><li>Examples: rab-bit, ten-nis, pup-pet, trum-pet, tab-let, sis-ter, in-vent.</li></ul>",
-        "schwa_ending_er": "🏫 <strong>Schwa 'er' at the End of a Word Lesson (List 30):</strong><br>In multi-syllable words, the final 'er' syllable is unstressed. The vowel sound drops its pure tone and sounds like a short /u/.<br><ul><li>Examples: runner, over, winter, teacher, summer, under, dinner, swimmer.</li></ul>",
-        "prefix_un_meaning": "🏫 <strong>Prefix un- Morphology Lesson (List 31):</strong><br>The structural prefix layout <strong>un-</strong> attaches to the front of base words to immediately mean <strong>'not'</strong> or 'the opposite of'.<br><ul><li>Examples: undo, untie, unsafe, unlucky, unlock, unfold, unable, unhappy, unknown.</li></ul>",
-        "suffixes_morphology_three": "🏫 <strong>Suffixes -ly, -er, -est Lesson (List 32):</strong><br>The suffix -ly turns base words into adverbs. The suffixes -er and -est are used to compare adjectives side-by-side.<br><ul><li>Examples: lovely, loudly, quickly, suddenly, safely, bigger, biggest, smaller, smallest, louder, loudest.</li></ul>",
-        "trigraph_tch_rule": "🏫 <strong>Trigraph 'tch' Short Vowel Lesson (List 33):</strong><br>A trigraph is a single sound made of three letters. We use <strong>'tch'</strong> at the end of 1-syllable words directly after a short vowel.<br><ul><li>Examples: catch, match, fetch, stretch, pitch, ditch, witch, hutch, clutch, watch, kitchen.</li></ul>"
+        "heart_words": "🏫 <strong>Heart Words Lesson:</strong><br>Heart Words contain tricky parts that don't follow regular spelling rules. We have to learn these unexpected letter choices by heart!<br><ul><li>Examples: any, many, through, bought, really, always, house, eyes, once, our.</li></ul>",
+        "r_controlled_ar": "🏫 <strong>R-Controlled Vowel 'ar' Lesson (List 18):</strong><br>When 'r' follows the vowel 'a', it changes the sound to /ar/ like a pirate!<br><ul><li>Examples: farm, dark, car, start, park, garden, carpet, shark, smart.</li></ul>",
+        "r_controlled_or": "🏫 <strong>R-Controlled Vowel 'or' Lesson (List 18):</strong><br>When 'r' follows the vowel 'o', it changes the sound to /or/.<br><ul><li>Examples: for, corn, torn, fork, popcorn, storm, sport, short, morning, porch.</li></ul>",
+        "final_y_long_i": "🏫 <strong>Final 'y' as Long /i/ Lesson (List 19):</strong><br>The letter 'y' at the end of a single-syllable word represents the long /i/ sound.<br><ul><li>Examples: cry, shy, why, my, sly, spy, fry, try, fly, by, sky.</li></ul>",
+        "final_y_long_e": "🏫 <strong>Final 'y' as Long /e/ Lesson (List 19):</strong><br>The letter 'y' at the end of a two-syllable word represents the long /e/ sound.<br><ul><li>Examples: baby, happy, funny, silly, puppy, lolly, army, family, party, sorry.</li></ul>",
+        "vowel_team_ee": "🏫 <strong>Vowel Team 'ee' Lesson (List 20):</strong><br>The vowel team 'ee' joins together to represent the long /e/ sound.<br><ul><li>Examples: see, bee, been, sleep, between, tree, three, week, green, sheet, street.</li></ul>",
+        "vowel_team_ea": "🏫 <strong>Vowel Team 'ea' Lesson (List 20):</strong><br>The vowel team 'ea' also joins together to represent the long /e/ sound.<br><ul><li>Examples: sea, eat, tea, each, leaf, team, beach, neat, bean, heat, meal, clean.</li></ul>",
+        "vowel_team_oa": "🏫 <strong>Vowel Team 'oa' Lesson (List 21):</strong><br>The vowel team 'oa' represents the long /o/ sound, usually found in the middle of a word.<br><ul><li>Examples: boat, road, coat, goat, foam, soak, soap, coach, throat, toast, float.</li></ul>",
+        "vowel_team_ow": "🏫 <strong>Vowel Team 'ow' Lesson (List 21):</strong><br>The vowel team 'ow' represents the long /o/ sound, usually found at the end of words or syllables.<br><ul><li>Examples: slow, row, show, grow, low, mow, bow, grown, own, window, snow, know, pillow.</li></ul>",
+        "homophones_one": "🏫 <strong>Homophones 1 Lesson (List 22):</strong><br>Homophones sound identical but have different spellings and meanings.<br><ul><li>Examples: to/too/two, be/bee, by/buy, for/four, sail/sale, mail/male, meat/meet, weak/week.</li></ul>",
+        "vowel_team_oo_good": "🏫 <strong>Vowel Team 'oo' (as in good) Lesson (List 23):</strong><br>The vowel team 'oo' represents a short book/foot sound.<br><ul><li>Examples: good, cool, school, took, cookbook, shook, hook, foot, wool, look, book, wood.</li></ul>",
+        "vowel_team_oo_food": "🏫 <strong>Vowel Team 'oo' (as in food) Lesson (List 23):</strong><br>The vowel team 'oo' represents a long zoom/moon sound.<br><ul><li>Examples: food, room, soon, too, kangaroo, moon, shoot, zoom, spoon, root, roof, balloon.</li></ul>",
+        "compound_words": "🏫 <strong>Compound Words Lesson (List 24):</strong><br>Two separate words joined together to make a brand new word with a new meaning.<br><ul><li>Examples: something, sometimes, someone, somewhere, everything, everybody, everyone, everywhere.</li></ul>",
+        "consonant_clusters": "🏫 <strong>3-Letter Consonant Clusters Lesson (List 25):</strong><br>Each letter in clusters like str-, spr-, scr-, and spl- keeps its individual sound when blended.<br><ul><li>Examples: strap, strip, string, street, stream, sprint, spray, sprout, scrub, scream, scratch, splash, split.</li></ul>",
+        "vowel_teams_oi_oy": "🏫 <strong>Vowel Teams 'oi' and 'oy' Lesson (List 26):</strong><br>Both make the /oy/ sound. 'oi' goes in the middle of a syllable, and 'oy' goes at the end.<br><ul><li>Examples: boil, toil, soil, coil, moist, point, join, noise, voice, toy, boy, soy, enjoy, destroy.</li></ul>",
+        "contractions_two": "🏫 <strong>Contractions Lesson (List 27):</strong><br>Two words joined together and made shorter using an apostrophe where letters were dropped.<br><ul><li>Examples: I've, he's, won't, she's, that's.</li></ul>",
+        "r_controlled_er_ir_ur": "🏫 <strong>R-Controlled 'er', 'ir', 'ur' Lesson (List 28):</strong><br>When 'r' follows e, i, or u, it changes the vowel sound to a matching /er/ sound.<br><ul><li>Examples: turn, hurt, surf, burn, girl, first, dirt, shirt, skirt, bird, her, fern, herb, germ.</li></ul>",
+        "vccv_syllable_division": "🏫 <strong>Syllable Division VCCV Lesson (List 29):</strong><br>Divide words between two middle consonants (VC/CV) to make spelling easier.<br><ul><li>Examples: rab-bit, rub-bish, ten-nis, pup-pet, mas-cot, pub-lic, trum-pet, sis-ter, plas-tic.</li></ul>",
+        "schwa_ending_er": "🏫 <strong>Schwa 'er' at End of Words Lesson (List 30):</strong><br>The unstressed final 'er' syllable loses its pure sound and sounds like a short /u/.<br><ul><li>Examples: runner, over, winter, ever, never, teacher, summer, under, dinner, swimmer.</li></ul>",
+        "prefix_un": "🏫 <strong>Prefix un- Morphology Lesson (List 31):</strong><br>The prefix un- added to a base word means 'not' or 'the opposite of'.<br><ul><li>Examples: undo, untie, unsafe, unlucky, unlock, unfold, unable, uncover, unhappy, unknown.</li></ul>",
+        "suffixes_ly_er_est": "🏫 <strong>Suffixes -ly, -er, -est Lesson (List 32):</strong><br>-ly forms adverbs. -er and -est compare adjectives.<br><ul><li>Examples: lovely, loudly, quickly, friendly, sadly, neatly, suddenly, bigger, biggest, smaller, smallest.</li></ul>",
+        "trigraph_tch": "🏫 <strong>Trigraph 'tch' Lesson (List 33):</strong><br>Three letters that spell one sound. Used at the end of a 1-syllable word straight after a short vowel.<br><ul><li>Examples: catch, latch, hutch, pitch, hatch, fetch, ditch, stitch, watch, stretch, witch, match, kitchen.</li></ul>"
     };
 
     const DATA_LISTS = [
         {
             title: "Heart Words",
             words: [
-                { word: "many", rule: "heart_words", sentence: "There are so __ bright stars visible in the dark sky tonight." },
-                { word: "their", rule: "heart_words", sentence: "The children put on __ warm winter coats before going outside." },
-                { word: "through", rule: "heart_words", sentence: "The train went directly __ the dark mountain tunnel." },
-                { word: "bought", rule: "heart_words", sentence: "Dad went to the market and __ some fresh red apples." },
-                { word: "always", rule: "heart_words", sentence: "You should __ wash your hands properly before eating lunch." },
-                { word: "house", rule: "heart_words", sentence: "We live in a cozy blue __ at the very end of the street." }
+                { word: "any", rule: "heart_words", sentence: "Do you have __ spare colored pencils I could borrow?" },
+                { word: "also", rule: "heart_words", sentence: "She likes to play netball and she __ loves swimming." },
+                { word: "ask", rule: "heart_words", sentence: "Please __ the teacher for assistance if you get stuck." },
+                { word: "ever", rule: "heart_words", sentence: "Have you __ seen a wild kiwi bird in the forest?" },
+                { word: "many", rule: "heart_words", sentence: "There are so __ bright stars visible in the sky tonight." },
+                { word: "very", rule: "heart_words", sentence: "The hot spicy soup was __ delicious but quite hot." },
+                { word: "only", rule: "heart_words", sentence: "There is __ one slice of chocolate cake left in the container." },
+                { word: "help", rule: "heart_words", sentence: "Can you please __ me clean up the art station?" },
+                { word: "their", rule: "heart_words", sentence: "The children took off __ muddy shoes at the door." },
+                { word: "through", rule: "heart_words", sentence: "The train sped directly __ the long dark mountain tunnel." },
+                { word: "bought", rule: "heart_words", sentence: "Mum went to the bakery and __ some fresh bread." },
+                { word: "really", rule: "heart_words", sentence: "I am __ excited about our school trip tomorrow." },
+                { word: "hour", rule: "heart_words", sentence: "We practiced our spelling lists for an __ this afternoon." },
+                { word: "gone", rule: "heart_words", sentence: "All the birds have __ south for the chilly winter season." },
+                { word: "never", rule: "heart_words", sentence: "I have __ been on an airplane ride before." },
+                { word: "always", rule: "heart_words", sentence: "You should __ check both ways before crossing the road." },
+                { word: "house", rule: "heart_words", sentence: "They live in a beautiful brick __ near the local school." },
+                { word: "eyes", rule: "heart_words", sentence: "Keep your __ on the whiteboard while I show the example." },
+                { word: "more", rule: "heart_words", sentence: "Would you like some __ sweet strawberries with your ice cream?" },
+                { word: "once", rule: "heart_words", sentence: "__ upon a time, there was a brave little knight." },
+                { word: "our", rule: "heart_words", sentence: "We are painting a big mural for __ classroom wall." },
+                { word: "fast", rule: "heart_words", sentence: "The cheetah ran incredibly __ across the open fields." },
+                { word: "last", rule: "heart_words", sentence: "He was the __ person to complete the cross country race." }
             ]
         },
         {
-            title: "List 18: R-Controlled 'ar' / 'or'",
+            title: "List 18: R-Controlled 'ar'",
             words: [
-                { word: "start", rule: "r_controlled_ar_or", sentence: "The race runners stood behind the line waiting to __." },
-                { word: "garden", rule: "r_controlled_ar_or", sentence: "Beautiful colorful flowers are blooming inside our backyard __." },
-                { word: "carpet", rule: "r_controlled_ar_or", sentence: "Please wipe your muddy shoes before stepping onto the living room __." },
-                { word: "popcorn", rule: "r_controlled_ar_or", sentence: "We ate a large bowl of salty __ while watching the movie." },
-                { word: "morning", rule: "r_controlled_ar_or", sentence: "The bright sun rises early in the __ to light up the sky." },
-                { word: "storm", rule: "r_controlled_ar_or", sentence: "Loud thunder and flashes of lightning came with the dark rain __." }
+                { word: "farm", rule: "r_controlled_ar", sentence: "We saw cows, sheep, and horses at the countryside __." },
+                { word: "dark", rule: "r_controlled_ar", sentence: "The sky turned very __ right before the heavy storm hit." },
+                { word: "car", rule: "r_controlled_ar", sentence: "Dad parked the family __ in the driveway." },
+                { word: "start", rule: "r_controlled_ar", sentence: "Wait for the whistle blow to __ the running race." },
+                { word: "arm", rule: "r_controlled_ar", sentence: "He wore a bright yellow sweatband on his lower __." },
+                { word: "jar", rule: "r_controlled_ar", sentence: "She reached into the glass __ to grab a sweet treat." },
+                { word: "art", rule: "r_controlled_ar", sentence: "We used watercolors during our afternoon __ lesson." },
+                { word: "park", rule: "r_controlled_ar", sentence: "Let's go kick the football down at the grassy __." },
+                { word: "started", rule: "r_controlled_ar", sentence: "The movie had already __ by the time we sat down." },
+                { word: "bark", rule: "r_controlled_ar", sentence: "Our dog will always __ when the mail carrier arrives." },
+                { word: "March", rule: "r_controlled_ar", sentence: "The school autumn festival is held in the month of __." },
+                { word: "spark", rule: "r_controlled_ar", sentence: "A tiny __ flew safely out from the roaring campfire." },
+                { word: "garden", rule: "r_controlled_ar", sentence: "Grandpa grows juicy red tomatoes in his backyard __." },
+                { word: "smart", rule: "r_controlled_ar", sentence: "She came up with a very __ way to solve the puzzle." },
+                { word: "carpet", rule: "r_controlled_ar", sentence: "We all sat cross-legged on the soft classroom __." },
+                { word: "cart", rule: "r_controlled_ar", sentence: "We loaded the groceries inside the rolling shopping __." },
+                { word: "hard", rule: "r_controlled_ar", sentence: "The diamond stone is known for being incredibly __." },
+                { word: "chart", rule: "r_controlled_ar", sentence: "We tracked our daily reading points on a wall __." },
+                { word: "shark", rule: "r_controlled_ar", sentence: "A large grey __ swam gracefully through the deep ocean water." },
+                { word: "artist", rule: "r_controlled_ar", sentence: "The talented __ painted a gorgeous sunset picture." },
+                { word: "arch", rule: "r_controlled_ar", sentence: "The stone __ formed a magnificent entrance to the courtyard." }
             ]
         },
         {
-            title: "List 19: Final 'y' Sounds",
+            title: "List 18: R-Controlled 'or'",
             words: [
-                { word: "why", rule: "final_y_sounds", sentence: "Can you explain __ the ocean water looks so blue today?" },
-                { word: "try", rule: "final_y_sounds", sentence: "Always __ your best when working on a difficult school problem." },
-                { word: "sky", rule: "final_y_sounds", sentence: "A white airplane flew high above the fluffy clouds in the __." },
-                { word: "baby", rule: "final_y_sounds", sentence: "The tiny __ fell fast asleep in the crib under a soft blanket." },
-                { word: "family", rule: "final_y_sounds", sentence: "Our whole __ gathered together at the table for a holiday dinner." },
-                { word: "lucky", rule: "final_y_sounds", sentence: "He felt very __ to find a rare four-leaf clover in the grass." }
+                { word: "or", rule: "r_controlled_or", sentence: "Would you prefer an apple __ a sweet juicy pear?" },
+                { word: "for", rule: "r_controlled_or", sentence: "This special package arrived in the mail __ you." },
+                { word: "corn", rule: "r_controlled_or", sentence: "We roasted fresh sweet __ on the barbecue grill." },
+                { word: "torn", rule: "r_controlled_or", sentence: "My favorite book page got accidentally __ while turning it." },
+                { word: "fork", rule: "r_controlled_or", sentence: "Use a __ and knife to neatly eat your dinner." },
+                { word: "popcorn", rule: "r_controlled_or", sentence: "We bought a large bucket of crunchy __ at the theater." },
+                { word: "born", rule: "r_controlled_or", sentence: "The tiny little lamb was __ early this morning." },
+                { word: "storm", rule: "r_controlled_or", sentence: "The wild winter __ brought flashing lightning and heavy rain." },
+                { word: "sport", rule: "r_controlled_or", sentence: "My favorite weekend __ to play with friends is soccer." },
+                { word: "short", rule: "r_controlled_or", sentence: "The green pencil is too __ to hold properly now." },
+                { word: "report", rule: "r_controlled_or", sentence: "He wrote an amazing morning __ on endangered animals." },
+                { word: "morning", rule: "r_controlled_or", sentence: "The bright sun rises high early in the __." },
+                { word: "porch", rule: "r_controlled_or", sentence: "We sat out on the front __ watching the rain fall." },
+                { word: "scorch", rule: "r_controlled_or", sentence: "Be careful not to __ your clothes with the hot iron." },
+                { word: "snort", rule: "r_controlled_or", sentence: "The playful little piglet made a funny loud __." },
+                { word: "forget", rule: "r_controlled_or", sentence: "Don't __ to pack your swimming gear today." },
+                { word: "north", rule: "r_controlled_or", sentence: "The compass needle points directly to the __." },
+                { word: "cork", rule: "r_controlled_or", sentence: "The glass bottle was sealed with a round wooden __." },
+                { word: "pork", rule: "r_controlled_or", sentence: "We had delicious roasted __ chops for our Sunday dinner." },
+                { word: "torch", rule: "r_controlled_or", sentence: "We used a bright __ to find our way while camping." },
+                { word: "horse", rule: "r_controlled_or", sentence: "She learned how to ride a brown __ during the holidays." },
+                { word: "gorge", rule: "r_controlled_or", sentence: "A crystal clear river flowed through the deep rock __." }
             ]
         },
         {
-            title: "List 20: Vowel Teams 'ee' / 'ea'",
+            title: "List 19: Final 'y' as Long /i/",
             words: [
-                { word: "green", rule: "ee_ea_vowels", sentence: "Fresh __ grass began to grow quickly after the spring rain." },
-                { word: "street", rule: "ee_ea_vowels", sentence: "Look both ways carefully before walking across the busy __." },
-                { word: "weekend", rule: "ee_ea_vowels", sentence: "We love going to the park to play sports over the __." },
-                { word: "beach", rule: "ee_ea_vowels", sentence: "We built a giant sandcastle right on the shore at the __." },
-                { word: "leaf", rule: "ee_ea_vowels", sentence: "A single autumn __ drifted slowly down from the tall oak tree." },
-                { word: "clean", rule: "ee_ea_vowels", sentence: "Please help tidy up the room so it looks perfectly neat and __." }
+                { word: "cry", rule: "final_y_long_i", sentence: "The tired toddler began to __ when he dropped his toy." },
+                { word: "shy", rule: "final_y_long_i", sentence: "The new student felt a bit __ on her very first day." },
+                { word: "why", rule: "final_y_long_i", sentence: "Can you tell me __ the leaves change color in autumn?" },
+                { word: "my", rule: "final_y_long_i", sentence: "I forgot to bring __ school lunchbox from home today." },
+                { word: "sly", rule: "final_y_long_i", sentence: "The __ red fox crept silently into the chicken coop." },
+                { word: "sty", rule: "final_y_long_i", sentence: "The farm pigs rolled happily in the mud inside their __." },
+                { word: "spy", rule: "final_y_long_i", sentence: "I use my little eyes to __ something that is bright blue." },
+                { word: "fry", rule: "final_y_long_i", sentence: "We can __ the chopped vegetables in a hot pan." },
+                { word: "try", rule: "final_y_long_i", sentence: "You must always __ your absolute best in everything." },
+                { word: "fly", rule: "final_y_long_i", sentence: "We watched the colorful kite __ high up in the breeze." },
+                { word: "by", rule: "final_y_long_i", sentence: "Our neat school bags are lined up neatly __ the classroom door." },
+                { word: "sky", rule: "final_y_long_i", sentence: "There wasn't a single white cloud visible in the blue __." }
             ]
         },
         {
-            title: "List 21 & 22: 'oa' / 'ow' & Homophones",
+            title: "List 19: Final 'y' as Long /e/",
             words: [
-                { word: "boat", rule: "oa_ow_vowels", sentence: "A white fishing __ bobbed up and down on the ocean waves." },
-                { word: "window", rule: "oa_ow_vowels", sentence: "Look out the __ to see if it is still raining outside." },
-                { word: "yellow", rule: "oa_ow_vowels", sentence: "The bright __ sunflower grew taller than the wooden fence." },
-                { word: "too", rule: "homophones_one", sentence: "I want to go to the playground, and my brother wants to go __." },
-                { word: "four", rule: "homophones_one", sentence: "A square shape has exactly __ equal sides and straight corners." },
-                { word: "week", rule: "homophones_one", sentence: "There are seven days contained within one single calendar __." }
+                { word: "baby", rule: "final_y_long_e", sentence: "The tiny __ fell fast asleep in the rocking crib." },
+                { word: "happy", rule: "final_y_long_e", sentence: "Everyone felt incredibly __ when our team won the game." },
+                { word: "funny", rule: "final_y_long_e", sentence: "The circus clown told a very __ joke that made us laugh." },
+                { word: "silly", rule: "final_y_long_e", sentence: "The playful puppy made a __ face while chasing its tail." },
+                { word: "cheeky", rule: "final_y_long_e", sentence: "The __ little monkey stole a banana from the basket." },
+                { word: "puppy", rule: "final_y_long_e", sentence: "We brought home a fluffy golden __ for a family pet." },
+                { word: "lolly", rule: "final_y_long_e", sentence: "He chose a red raspberry __ as a special prize." },
+                { word: "army", rule: "final_y_long_e", sentence: "The marching __ soldiers stood in perfect straight lines." },
+                { word: "body", rule: "final_y_long_e", sentence: "Regular exercise keeps your __ feeling strong and healthy." },
+                { word: "pony", rule: "final_y_long_e", sentence: "The little girl brushed the fluffy mane of the small __." },
+                { word: "family", rule: "final_y_long_e", sentence: "Our entire __ gathers together for dinner every evening." },
+                { word: "empty", rule: "final_y_long_e", sentence: "The water bottle was completely __ after the long run." },
+                { word: "party", rule: "final_y_long_e", sentence: "We played fun games at my friend's birthday __." },
+                { word: "sorry", rule: "final_y_long_e", sentence: "Please say __ if you accidentally bump into someone." },
+                { word: "nobody", rule: "final_y_long_e", sentence: "The playground was empty because __ was outside yet." },
+                { word: "marry", rule: "final_y_long_e", sentence: "The prince and princess decided to __ in the castle." },
+                { word: "hurry", rule: "final_y_long_e", sentence: "We must __ so we don't miss the morning school bus." },
+                { word: "windy", rule: "final_y_long_e", sentence: "It was a wild, __ day perfect for flying kites." },
+                { word: "study", rule: "final_y_long_e", sentence: "We need to __ our vocabulary patterns for the upcoming test." },
+                { word: "carry", rule: "final_y_long_e", sentence: "Can you help me __ these heavy library books?" },
+                { word: "lucky", rule: "final_y_long_e", sentence: "He felt extremely __ to find a shiny coin on the ground." }
             ]
         },
         {
-            title: "List 23 & 25: Vowel 'oo' & Clusters",
+            title: "List 20: Vowel Team 'ee'",
             words: [
-                { word: "school", rule: "oo_vowel_sounds", sentence: "We walk through the gates of our __ every morning ready to learn." },
-                { word: "book", rule: "oo_vowel_sounds", sentence: "She read a fascinating chapter __ about hidden treasures before bed." },
-                { word: "soon", rule: "oo_vowel_sounds", sentence: "The sun will be setting __, so we should head back indoors." },
-                { word: "street", rule: "consonant_clusters", sentence: "The cars drove slowly down our quiet neighborhood __." },
-                { word: "stream", rule: "consonant_clusters", sentence: "Cool fresh water flowed gently over the rocks inside the forest __." },
-                { word: "splash", rule: "consonant_clusters", sentence: "The kids jumped right into the swimming pool with a massive __." }
+                { word: "see", rule: "vowel_team_ee", sentence: "Look through the binoculars to __ the birds clearly." },
+                { word: "bee", rule: "vowel_team_ee", sentence: "A fuzzy yellow __ buzzed around the garden flowers." },
+                { word: "been", rule: "vowel_team_ee", sentence: "Have you ever __ to the zoo to see the lions?" },
+                { word: "sleep", rule: "vowel_team_ee", sentence: "It is important to get enough __ before a school day." },
+                { word: "between", rule: "vowel_team_ee", sentence: "The tennis ball landed directly __ the two white lines." },
+                { word: "tree", rule: "vowel_team_ee", sentence: "An old oak __ grows right in the middle of our yard." },
+                { word: "three", rule: "vowel_team_ee", sentence: "A triangle has exactly __ straight sides and corners." },
+                { word: "week", rule: "vowel_team_ee", sentence: "There are seven days in a full school __." },
+                { word: "peep", rule: "vowel_team_ee", sentence: "The baby chick let out a tiny soft __ from its nest." },
+                { word: "green", rule: "vowel_team_ee", sentence: "The lush __ grass looks beautiful after the spring rain." },
+                { word: "sheet", rule: "vowel_team_ee", sentence: "Please write your answers clearly on a clean __ of paper." },
+                { word: "beep", rule: "vowel_team_ee", sentence: "The car horn made a loud __ sound to warn us." },
+                { word: "greet", rule: "vowel_team_ee", sentence: "Our teachers always __ us warmly at the classroom door." },
+                { word: "sheep", rule: "vowel_team_ee", sentence: "The farmer guided the flock of white __ into the paddock." },
+                { word: "street", rule: "vowel_team_ee", sentence: "Always look both ways before walking across a busy __." },
+                { word: "bees", rule: "vowel_team_ee", sentence: "Many honey __ were working hard inside the hive." },
+                { word: "sleepy", rule: "vowel_team_ee", sentence: "The warm fire made everyone feel very __ and relaxed." },
+                { word: "weekend", rule: "vowel_team_ee", sentence: "We plan to go camping over the long holiday __." },
+                { word: "peeping", rule: "vowel_team_ee", sentence: "The little yellow flowers were __ through the white snow." },
+                { word: "wheel", rule: "vowel_team_ee", sentence: "The front __ of my bicycle needs some more air." },
+                { word: "sleet", rule: "vowel_team_ee", sentence: "Cold freezing __ began falling from the stormy sky." }
             ]
         },
         {
-            title: "List 26 & 28: Vowels 'oi'/'oy' & 'er'/'ir'/'ur'",
+            title: "List 20: Vowel Team 'ea'",
             words: [
-                { word: "boil", rule: "oi_oy_vowels", sentence: "We need to __ the water on the stove before adding the pasta." },
-                { word: "point", rule: "oi_oy_vowels", sentence: "Use your index finger to __ at the map location on the board." },
-                { word: "enjoy", rule: "oi_oy_vowels", sentence: "I hope you thoroughly __ playing this fun vocabulary game today!" },
-                { word: "turn", rule: "r_controlled_er_ir_ur", sentence: "Make a sharp left __ when you reach the edge of the playground." },
-                { word: "girl", rule: "r_controlled_er_ir_ur", sentence: "The clever __ raised her hand quickly to answer the teacher's question." },
-                { word: "fern", rule: "r_controlled_er_ir_ur", sentence: "A green leafy __ plant grew beautifully in the shady forest spot." }
+                { word: "sea", rule: "vowel_team_ea", sentence: "Large cargo ships sailed across the deep blue __." },
+                { word: "eat", rule: "vowel_team_ea", sentence: "Remember to wash your hands before you __ lunch." },
+                { word: "tea", rule: "vowel_team_ea", sentence: "Mum poured hot herbal __ into her favorite ceramic mug." },
+                { word: "each", rule: "vowel_team_ea", sentence: "The teacher handed out a special sticker to __ student." },
+                { word: "leaf", rule: "vowel_team_ea", sentence: "A crispy autumn __ fell slowly from the maple tree branch." },
+                { word: "team", rule: "vowel_team_ea", sentence: "Our relay __ won the blue ribbon at the sports day." },
+                { word: "reach", rule: "vowel_team_ea", sentence: "He had to stretch up high to __ the top bookshelf." },
+                { word: "beach", rule: "vowel_team_ea", sentence: "We collected smooth shells on the sandy shoreline at the __." },
+                { word: "neat", rule: "vowel_team_ea", sentence: "Please make sure your handwriting looks perfectly tidy and __." },
+                { word: "bean", rule: "vowel_team_ea", sentence: "We planted a green __ seed inside a small paper cup." },
+                { word: "leap", rule: "vowel_team_ea", sentence: "Watch the agile frog __ from one green lily pad to another." },
+                { word: "heat", rule: "vowel_team_ea", sentence: "The summer sun generated an intense __ across the desert." },
+                { word: "meal", rule: "vowel_team_ea", sentence: "Grandma cooked a delicious hot __ for our family." },
+                { word: "peach", rule: "vowel_team_ea", sentence: "I bit into a sweet, juicy __ during afternoon tea." },
+                { word: "cheap", rule: "vowel_team_ea", sentence: "The simple plastic toys were very __ at the market bazaar." },
+                { word: "eating", rule: "vowel_team_ea", sentence: "The hungry caterpillars were busy __ the green leaves." },
+                { word: "reached", rule: "vowel_team_ea", sentence: "We finally __ the mountain summit after a long hike." },
+                { word: "heater", rule: "vowel_team_ea", sentence: "We turned on the electric __ to warm up the cold room." },
+                { word: "leapfrog", rule: "vowel_team_ea", sentence: "The kids played a game of __ out on the school lawn." },
+                { word: "clean", rule: "vowel_team_ea", sentence: "It's important to keep your bedroom neat and __." },
+                { word: "sneak", rule: "vowel_team_ea", sentence: "The black cat tried to __ quietly into the kitchen." }
             ]
         },
         {
-            title: "List 29 & 30: Syllables & Endings",
+            title: "List 21: Vowel Team 'oa'",
             words: [
-                { word: "rabbit", rule: "vccv_syllable_division", sentence: "A fluffy brown __ hopped quickly across the green lawn." },
-                { word: "tennis", rule: "vccv_syllable_division", sentence: "They used rackets to hit the yellow ball back and forth in __." },
-                { word: "puppet", rule: "vccv_syllable_division", sentence: "He put his hand inside the cloth __ to make it talk to the class." },
-                { word: "winter", rule: "schwa_ending_er", sentence: "Heavy snow fell and freezing winds blew during the cold __ months." },
-                { word: "teacher", rule: "schwa_ending_er", sentence: "Our kind __ explained the new math lesson clearly on the board." },
-                { word: "dinner", rule: "schwa_ending_er", sentence: "Our family sat down around the table to eat a delicious evening __." }
+                { word: "boat", rule: "vowel_team_oa", sentence: "A sleek sailing __ floated smoothly on the lake water." },
+                { word: "road", rule: "vowel_team_oa", sentence: "The long highway __ stretched out through the countryside hills." },
+                { word: "coat", rule: "vowel_team_oa", sentence: "Put on your heavy winter __ before going into the cold." },
+                { word: "goat", rule: "vowel_team_oa", sentence: "The mountain __ climbed nimbly up the rocky cliff face." },
+                { word: "foam", rule: "vowel_team_oa", sentence: "The ocean waves left white fluffy __ on the beach sand." },
+                { word: "soak", rule: "vowel_team_oa", sentence: "Put the stained shirt in water to __ overnight." },
+                { word: "soap", rule: "vowel_team_oa", sentence: "Always wash your hands using warm water and liquid __." },
+                { word: "soaking", rule: "vowel_team_oa", sentence: "We got completely wet from the __ rain shower." },
+                { word: "coach", rule: "vowel_team_oa", sentence: "Our basketball __ showed us a fantastic new team play." },
+                { word: "throat", rule: "vowel_team_oa", sentence: "He drank warm honey water to soothe his sore __." },
+                { word: "toast", rule: "vowel_team_oa", sentence: "I spread sweet berry jam onto my warm crunchy __." },
+                { word: "float", rule: "vowel_team_oa", sentence: "A dry leaf will easily __ on top of water puddles." },
+                { word: "roam", rule: "vowel_team_oa", sentence: "Wild deer love to __ freely through the deep forest." },
+                { word: "loan", rule: "vowel_team_oa", sentence: "The local bank agreed to __ the family money for a house." },
+                { word: "loaf", rule: "vowel_team_oa", sentence: "Dad sliced up a fresh whole __ of sourdough bread." }
             ]
         },
         {
-            title: "List 31 & 32: Prefixes & Suffixes",
+            title: "List 21: Vowel Team 'ow'",
             words: [
-                { word: "untie", rule: "prefix_un_meaning", sentence: "Please help me __ this tight knot in my boot shoelace." },
-                { word: "unlock", rule: "prefix_un_meaning", sentence: "Dad used the front door key to safely __ the house house lock." },
-                { word: "unhappy", rule: "prefix_un_meaning", sentence: "The little boy felt quite __ when his toy accidentally broke." },
-                { word: "quickly", rule: "suffixes_morphology_three", sentence: "The fast cheetah sprinted __ across the wide open grassy plain." },
-                { word: "bigger", rule: "suffixes_morphology_three", sentence: "An elephant is much __ in physical size than a small farm horse." },
-                { word: "loudest", rule: "suffixes_morphology_three", sentence: "The thunder clap made the absolute __ sound heard all afternoon." }
+                { word: "slow", rule: "vowel_team_ow", sentence: "The garden snail was incredibly __ at crossing the path." },
+                { word: "row", rule: "vowel_team_ow", sentence: "We learned how to __ a wooden canoe across the lake." },
+                { word: "show", rule: "vowel_team_ow", sentence: "Please __ me where you found that interesting rock." },
+                { word: "grow", rule: "vowel_team_ow", sentence: "These tiny seeds will soon __ into tall green plants." },
+                { word: "low", rule: "vowel_team_ow", sentence: "The dark storm clouds hung very __ down over the valley." },
+                { word: "mow", rule: "vowel_team_ow", sentence: "Dad needs to __ the long green lawn this weekend." },
+                { word: "bow", rule: "vowel_team_ow", sentence: "She tied a pretty pink ribbon __ on the gift box." },
+                { word: "grown", rule: "vowel_team_ow", sentence: "You have __ so much taller since I last saw you!" },
+                { word: "own", rule: "vowel_team_ow", sentence: "I dream of one day having my very __ puppy dog." },
+                { word: "window", rule: "vowel_team_ow", sentence: "Look out the kitchen __ to see if the sun is shining." },
+                { word: "snow", rule: "vowel_team_ow", sentence: "Fluffy white __ covered the mountain peaks during winter." },
+                { word: "know", rule: "vowel_team_ow", sentence: "Do you __ the correct answer to this math equation?" },
+                { word: "pillow", rule: "vowel_team_ow", sentence: "She rested her tired head on a soft, fluffy __." },
+                { word: "yellow", rule: "vowel_team_ow", sentence: "A bright __ sunflower grew tall next to our garden fence." },
+                { word: "below", rule: "vowel_team_ow", sentence: "From the high bridge, we could see fish swimming far __." }
+            ]
+        },
+        {
+            title: "List 22: Homophones 1",
+            words: [
+                { word: "to", rule: "homophones_one", sentence: "We walked all the way __ the public library together." },
+                { word: "too", rule: "homophones_one", sentence: "I want a slice of pizza, and I would love a drink __." },
+                { word: "two", rule: "homophones_one", sentence: "A bird has exactly __ wings to fly high in the air." },
+                { word: "be", rule: "homophones_one", sentence: "Remember to __ completely quiet while inside the library." },
+                { word: "bee", rule: "homophones_one", sentence: "The black and yellow __ collected sweet nectar from flowers." },
+                { word: "by", rule: "homophones_one", sentence: "The school text books are organized neatly __ the cabinet." },
+                { word: "buy", rule: "homophones_one", sentence: "I saved my allowance money to __ a new board game." },
+                { word: "bye", rule: "homophones_one", sentence: "We waved out and said __ as our grandparents drove away." },
+                { word: "for", rule: "homophones_one", sentence: "This homemade card was created specifically __ my teacher." },
+                { word: "four", rule: "homophones_one", sentence: "A car relies on __ rolling wheels to drive down the street." },
+                { word: "sail", rule: "homophones_one", sentence: "Watch the white canvas __ catch the wind on the boat." },
+                { word: "sale", rule: "homophones_one", sentence: "The local toy store is having a massive holiday __." },
+                { word: "mail", rule: "homophones_one", sentence: "The postman delivered a special letter in our __ box." },
+                { word: "male", rule: "homophones_one", sentence: "A proud royal stag is a __ deer with large antlers." },
+                { word: "meat", rule: "homophones_one", sentence: "Lions are carnivores that consume fresh __ to survive." },
+                { word: "meet", rule: "homophones_one", sentence: "Let's all __ up near the school playground after class." },
+                { word: "weak", rule: "homophones_one", sentence: "He felt quite tired and __ after recovering from the flu." },
+                { word: "week", rule: "homophones_one", sentence: "There are exactly seven days contained in one single __." }
+            ]
+        },
+        {
+            title: "List 23: Vowel Team 'oo'",
+            words: [
+                { word: "good", rule: "vowel_team_oo_good", sentence: "Reading books every single night is a __ habit to build." },
+                { word: "cool", rule: "vowel_team_oo_good", sentence: "A pleasant, __ breeze blew through the open classroom window." },
+                { word: "school", rule: "vowel_team_oo_good", sentence: "We line up on the courts before entering our __ building." },
+                { word: "took", rule: "vowel_team_oo_good", sentence: "She __ a slice of crisp watermelon from the fruit platter." },
+                { word: "cookbook", rule: "vowel_team_oo_good", sentence: "Mum followed a cake recipe from her favorite baking __." },
+                { word: "shook", rule: "vowel_team_oo_good", sentence: "The wet dog violently __ its fur to get dry after a bath." },
+                { word: "hook", rule: "vowel_team_oo_good", sentence: "Please hang your heavy school bag securely on the wall __." },
+                { word: "foot", rule: "vowel_team_oo_good", sentence: "He kicked the soccer ball into the goal using his left __." },
+                { word: "wool", rule: "vowel_team_oo_good", sentence: "Grandma knitted a cozy winter sweater using thick sheep's __." },
+                { word: "outlook", rule: "vowel_team_oo_good", sentence: "The high mountain peak offered a breathtaking __ of the valley." },
+                { word: "stood", rule: "vowel_team_oo_good", sentence: "The students all __ up politely when the principal walked in." },
+                { word: "hood", rule: "vowel_team_oo_good", sentence: "Pull up the __ of your jacket to shield your ears from rain." },
+                { word: "look", rule: "vowel_team_oo_good", sentence: "Take a close __ at this interesting beetle under the glass." },
+                { word: "book", rule: "vowel_team_oo_good", sentence: "I am reading an adventurous chapter __ about hidden treasures." },
+                { word: "wood", rule: "vowel_team_oo_good", sentence: "We stacked chopped pieces of dry __ next to the fireplace." },
+                { word: "food", rule: "vowel_team_oo_food", sentence: "Healthy nutritious __ gives us plenty of energy to play sports." },
+                { word: "room", rule: "vowel_team_oo_food", sentence: "Please clean up the toys scattered across your bed __." },
+                { word: "soon", rule: "vowel_team_oo_food", sentence: "The sun will set __, so we should head back indoors." },
+                { word: "too", rule: "vowel_team_oo_food", sentence: "The hot soup was far __ hot to eat right away." },
+                { word: "kangaroo", rule: "vowel_team_oo_food", sentence: "A large Australian __ hopped quickly across the grassy plain." },
+                { word: "moon", rule: "vowel_team_oo_food", sentence: "The bright full __ glowed beautifully in the dark night sky." },
+                { word: "shoot", rule: "vowel_team_oo_food", sentence: "He got ready to __ a basket from the free-throw line." },
+                { word: "zoom", rule: "vowel_team_oo_food", sentence: "Watch the fast race cars __ past the grandstand finish line." },
+                { word: "spoon", rule: "vowel_team_oo_food", sentence: "Use a metal __ to eat your morning bowl of cereal." },
+                { word: "root", rule: "vowel_team_oo_food", sentence: "The thick tree __ grew deep down into the rich garden soil." },
+                { word: "roof", rule: "vowel_team_oo_food", sentence: "Raindrops pattered loudly against the metal tin __ of our cabin." },
+                { word: "boom", rule: "vowel_team_oo_food", sentence: "A sudden loud __ of thunder frightened the resting cat." },
+                { word: "gloom", rule: "vowel_team_oo_food", sentence: "The heavy morning fog brought a deep grey __ to the forest." },
+                { word: "balloon", rule: "vowel_team_oo_food", sentence: "She tied a shiny red helium __ to her birthday chair." },
+                { word: "igloo", rule: "vowel_team_oo_food", sentence: "The Inuit hunters built a dome-shaped __ out of snow blocks." }
+            ]
+        },
+        {
+            title: "List 24: Compound Words 2",
+            words: [
+                { word: "something", rule: "compound_words", sentence: "There is __ making a strange rustling noise inside the bushes." },
+                { word: "sometimes", rule: "compound_words", sentence: "__ we go down to the local beach to watch the sunset." },
+                { word: "someone", rule: "compound_words", sentence: "Can __ please step up and volunteer to collect the worksheets?" },
+                { word: "somewhere", rule: "compound_words", sentence: "I know I left my reading glasses __ inside this room." },
+                { word: "everything", rule: "compound_words", sentence: "Make sure you pack __ into your school bag before leaving." },
+                { word: "everybody", rule: "compound_words", sentence: "__ in the crowded hall clapped loudly after the performance." },
+                { word: "everyone", rule: "compound_words", sentence: "The kind teacher wished __ a wonderful weekend holiday." },
+                { word: "everywhere", rule: "compound_words", sentence: "Colorful autumn leaves were scattered __ across the lawn." }
+            ]
+        },
+        {
+            title: "List 25: 3-Letter Clusters",
+            words: [
+                { word: "strap", rule: "consonant_clusters", sentence: "Tighten the shoulder __ of your heavy school backpack." },
+                { word: "strip", rule: "consonant_clusters", sentence: "The teacher cut out a long thin __ of bright blue paper." },
+                { word: "string", rule: "consonant_clusters", sentence: "We used some strong garden __ to tie up our bean plants." },
+                { word: "street", rule: "consonant_clusters", sentence: "The cars drove down the quiet neighborhood __." },
+                { word: "stream", rule: "consonant_clusters", sentence: "Cool fresh water trickled gently down the rocky forest __." },
+                { word: "stripe", rule: "consonant_clusters", sentence: "A zebra has distinctive black and white __ patterns on its coat." },
+                { word: "strain", rule: "consonant_clusters", sentence: "Be careful not to lift heavy boxes and __ your back." },
+                { word: "sprig", rule: "consonant_clusters", sentence: "Mum added a fresh __ of rosemary to the roasted potatoes." },
+                { word: "sprint", rule: "consonant_clusters", sentence: "The athletes had to __ as fast as possible to the finish line." },
+                { word: "sprain", rule: "consonant_clusters", sentence: "He wore an elastic bandage to protect his ankle __." },
+                { word: "sprite", rule: "consonant_clusters", sentence: "The old fairytale described a magical forest __ hiding in flowers." },
+                { word: "spray", rule: "consonant_clusters", sentence: "We used a water bottle to __ the dry plant leaves." },
+                { word: "sprout", rule: "consonant_clusters", sentence: "The tiny green seed began to __ out from the damp soil." },
+                { word: "spring", rule: "consonant_clusters", sentence: "Beautiful flowers begin blooming everywhere during the __ season." },
+                { word: "scrum", rule: "consonant_clusters", sentence: "The rugby players packed tightly together into a powerful __." },
+                { word: "scrub", rule: "consonant_clusters", sentence: "Use a firm brush to __ the dirty mud off your boots." },
+                { word: "scrap", rule: "consonant_clusters", sentence: "She drew a tiny sketch on a leftover __ of cardboard." },
+                { word: "scream", rule: "consonant_clusters", sentence: "Don't __ out loud while inside the quiet library building." },
+                { word: "scrape", rule: "consonant_clusters", sentence: "He fell on the asphalt and got a minor __ on his knee." },
+                { word: "scratch", rule: "consonant_clusters", sentence: "Our pet cat loves to __ its claws on the wooden post." },
+                { word: "script", rule: "consonant_clusters", sentence: "The actors read through their play __ before practicing on stage." },
+                { word: "splash", rule: "consonant_clusters", sentence: "The energetic kids jumped into the pool with a massive __." },
+                { word: "split", rule: "consonant_clusters", sentence: "We can easily __ the chocolate bar into two equal pieces." },
+                { word: "splint", rule: "consonant_clusters", sentence: "The doctor applied a wooden __ to hold his broken finger straight." },
+                { word: "splat", rule: "consonant_clusters", sentence: "The ripe water balloon fell on the concrete with a loud __." },
+                { word: "splendid", rule: "consonant_clusters", sentence: "We had a truly __ afternoon exploring the botanical gardens." },
+                { word: "spleen", rule: "consonant_clusters", sentence: "The __ is an internal organ that helps filter our blood." },
+                { word: "splits", rule: "consonant_clusters", sentence: "The gymnast demonstrated perfect balance by doing the __." }
+            ]
+        },
+        {
+            title: "List 26: Vowel Teams 'oi'/'oy'",
+            words: [
+                { word: "boil", rule: "vowel_teams_oi_oy", sentence: "We need to __ water on the stove before making hot tea." },
+                { word: "toil", rule: "vowel_teams_oi_oy", sentence: "The farmers had to __ out in the fields under the hot sun." },
+                { word: "soil", rule: "vowel_teams_oi_oy", sentence: "We dug a deep hole and filled it with rich dark garden __." },
+                { word: "coil", rule: "vowel_teams_oi_oy", sentence: "The long garden hose was rolled neatly into a tight __." },
+                { word: "moist", rule: "vowel_teams_oi_oy", sentence: "The chocolate cake turned out perfectly soft and __." },
+                { word: "boiled", rule: "vowel_teams_oi_oy", sentence: "Mum served warm __ eggs with toast soldiers for breakfast." },
+                { word: "boiling", rule: "vowel_teams_oi_oy", sentence: "Be extremely careful around a pot of __ hot soup." },
+                { word: "point", rule: "vowel_teams_oi_oy", sentence: "Use your finger to __ at the location on the world map." },
+                { word: "join", rule: "vowel_teams_oi_oy", sentence: "Would you like to come and __ our lunchtime chess club?" },
+                { word: "noise", rule: "vowel_teams_oi_oy", sentence: "The old broken refrigerator made a loud buzzing __ all night." },
+                { word: "joint", rule: "vowel_teams_oi_oy", sentence: "The elbow is the movable __ that connects your upper and lower arm." },
+                { word: "pointed", rule: "vowel_teams_oi_oy", sentence: "The teacher __ directly to the math lesson on the board." },
+                { word: "joined", rule: "vowel_teams_oi_oy", sentence: "Two new students __ our class at the start of this term." },
+                { word: "pointing", rule: "vowel_teams_oi_oy", sentence: "He was __ out the window at a bright rainbow in the sky." },
+                { word: "voice", rule: "vowel_teams_oi_oy", sentence: "Please speak in a calm, clear __ during the presentation." },
+                { word: "toy", rule: "vowel_teams_oi_oy", sentence: "He placed his favorite plastic __ back inside the storage box." },
+                { word: "boy", rule: "vowel_teams_oi_oy", sentence: "The clever __ raised his hand to answer the science question." },
+                { word: "soy", rule: "vowel_teams_oi_oy", sentence: "We poured some savory __ sauce over our stir-fried rice." },
+                { word: "Roy", rule: "vowel_teams_oi_oy", sentence: "Our uncle __ brought his friendly sheepdog to visit us." },
+                { word: "destroy", rule: "vowel_teams_oi_oy", sentence: "Be careful not to step on or __ the delicate sandcastle." },
+                { word: "enjoy", rule: "vowel_teams_oi_oy", sentence: "I hope you thoroughly __ playing this new vocabulary station game!" },
+                { word: "ploy", rule: "vowel_teams_oi_oy", sentence: "The clever detective figured out the thief's sneaky trick __." },
+                { word: "Troy", rule: "vowel_teams_oi_oy", sentence: "The ancient city of __ is famous for its legendary wooden horse." },
+                { word: "ahoy", rule: "vowel_teams_oi_oy", sentence: "The pirate captain shouted __ matey from the ship's deck." },
+                { word: "employ", rule: "vowel_teams_oi_oy", sentence: "The local company plans to __ several new workers this month." }
+            ]
+        },
+        {
+            title: "List 27: Contractions 2",
+            words: [
+                { word: "I've", rule: "contractions_two", sentence: "__ already completed all my spelling homework for the week." },
+                { word: "won't", rule: "contractions_two", sentence: "It __ rain tomorrow, so we can play sports outside." },
+                { word: "he's", rule: "contractions_two", sentence: "My brother says __ going to build a giant cardboard fort." },
+                { word: "she's", rule: "contractions_two", sentence: "Our teacher mentioned __ very proud of our reading progress." },
+                { word: "that's", rule: "contractions_two", sentence: "Look over there, __ the highest mountain peak in the region." }
+            ]
+        },
+        {
+            title: "List 28: R-Controlled 'er'/'ir'/'ur'",
+            words: [
+                { word: "turn", rule: "r_controlled_er_ir_ur", sentence: "Make a sharp right __ when you reach the end of the corridor." },
+                { word: "turned", rule: "r_controlled_er_ir_ur", sentence: "The green leaves quickly __ bright orange during the autumn months." },
+                { word: "hurt", rule: "r_controlled_er_ir_ur", sentence: "She accidentally tripped on the concrete path but wasn't severely __." },
+                { word: "surf", rule: "r_controlled_er_ir_ur", sentence: "We watched brave athletes __ down the crests of giant ocean waves." },
+                { word: "burn", rule: "r_controlled_er_ir_ur", sentence: "Be very careful near hot stoves so you do not __ your fingers." },
+                { word: "burnt", rule: "r_controlled_er_ir_ur", sentence: "The breakfast toast was left in the toaster too long and got __." },
+                { word: "church", rule: "r_controlled_er_ir_ur", sentence: "The old brick __ in the village has a spectacular tall steeple." },
+                { word: "slurp", rule: "r_controlled_er_ir_ur", sentence: "It is considered impolite to loudly __ your hot noodle soup." },
+                { word: "girl", rule: "r_controlled_er_ir_ur", sentence: "The talented young __ won first prize at the school art competition." },
+                { word: "first", rule: "r_controlled_er_ir_ur", sentence: "He crossed the line in __ place during the sprint race." },
+                { word: "dirt", rule: "r_controlled_er_ir_ur", sentence: "We dug deep down into the damp __ to search for earthworms." },
+                { word: "shirt", rule: "r_controlled_er_ir_ur", sentence: "He wore a crisp white collared __ for his school portrait." },
+                { word: "skirt", rule: "r_controlled_er_ir_ur", sentence: "The traditional Highland dancer wore a colorful tartan pleated __." },
+                { word: "birth", rule: "r_controlled_er_ir_ur", sentence: "We celebrated the __ of my beautiful new baby cousin." },
+                { word: "third", rule: "r_controlled_er_ir_ur", sentence: "Our classroom is located on the __ floor of the brick building." },
+                { word: "bird", rule: "r_controlled_er_ir_ur", sentence: "A beautiful native __ chirped sweet songs from the tree branch." },
+                { word: "her", rule: "r_controlled_er_ir_ur", sentence: "Sarah forgot to bring __ math textbook to class this morning." },
+                { word: "fern", rule: "r_controlled_er_ir_ur", sentence: "A lush green __ plant grew beautifully in the shady damp forest." },
+                { word: "herb", rule: "r_controlled_er_ir_ur", sentence: "Mint is a fantastic aromatic __ that grows easily in pots." },
+                { word: "jerk", rule: "r_controlled_er_ir_ur", sentence: "The old rusty train car started to move forward with a sudden __." },
+                { word: "perch", rule: "r_controlled_er_ir_ur", sentence: "The little bird flew down to __ safely on the wooden fence." },
+                { word: "nerd", rule: "r_controlled_er_ir_ur", sentence: "He proudly called himself a computer __ because he loved coding." },
+                { word: "germ", rule: "r_controlled_er_ir_ur", sentence: "Wash your hands thoroughly so you do not spread a harmful sickness __." },
+                { word: "Bert", rule: "r_controlled_er_ir_ur", sentence: "Grandpa __ loves to take his golden retriever for long walks." }
+            ]
+        },
+        {
+            title: "List 29: VCCV Syllable Division",
+            words: [
+                { word: "rabbit", rule: "vccv_syllable_division", sentence: "The long-eared __ hopped quickly through the green vegetable garden." },
+                { word: "rubbish", rule: "vccv_syllable_division", sentence: "Always put your empty plastic wrappers inside the __ bin." },
+                { word: "tennis", rule: "vccv_syllable_division", sentence: "They used stringed rackets to smash the ball over the high __ net." },
+                { word: "puppet", rule: "vccv_syllable_division", sentence: "She put her hand inside the cloth __ to put on an amusing play." },
+                { word: "mascot", rule: "vccv_syllable_division", sentence: "A giant fluffy kiwi bird was chosen as our school sports __." },
+                { word: "public", rule: "vccv_syllable_division", sentence: "Our class went on a field trip to the local __ library town center." },
+                { word: "nutmeg", rule: "vccv_syllable_division", sentence: "Mum grated a tiny pinch of fresh __ over the custard pie." },
+                { word: "trumpet", rule: "vccv_syllable_division", sentence: "He blew firmly into the brass __ to play a loud musical note." },
+                { word: "comment", rule: "vccv_syllable_division", sentence: "The kind teacher wrote an encouraging __ at the bottom of my essay." },
+                { word: "invent", rule: "vccv_syllable_division", sentence: "The clever young students want to __ a flying trash collecting robot." },
+                { word: "plastic", rule: "vccv_syllable_division", sentence: "We drink water out of reusable __ bottles instead of glass ones." },
+                { word: "tablet", rule: "vccv_syllable_division", sentence: "We used a digital touch-screen __ to complete our research assignment." },
+                { word: "sister", rule: "vccv_syllable_division", sentence: "My older __ helps me tie my shoelaces before we head to school." },
+                { word: "confide", rule: "vccv_syllable_division", sentence: "True best friends will always __ in each other and share secrets." },
+                { word: "ignite", rule: "vccv_syllable_division", sentence: "We used a single wooden match stick to carefully __ the campfire." }
+            ]
+        },
+        {
+            title: "List 30: Schwa 'er' Endings",
+            words: [
+                { word: "runner", rule: "schwa_ending_er", sentence: "The fastest __ sprinted past the grandstands to win the gold medal." },
+                { word: "over", rule: "schwa_ending_er", sentence: "A beautiful white dove flew directly __ our school building." },
+                { word: "winter", rule: "schwa_ending_er", sentence: "Heavy snow fell and freezing winds blew during the chilly __ months." },
+                { word: "ever", rule: "schwa_ending_er", sentence: "Have you __ seen a wild dolphin swimming out in the open ocean?" },
+                { word: "never", rule: "schwa_ending_er", sentence: "I have __ been late to class a single day this entire term." },
+                { word: "teacher", rule: "schwa_ending_er", sentence: "Our helpful __ demonstrated how to solve the difficult math equation." },
+                { word: "summer", rule: "schwa_ending_er", sentence: "We eat cold watermelon slices and go swimming during hot __ days." },
+                { word: "under", rule: "schwa_ending_er", sentence: "The sleepy orange cat was resting comfortably __ the wooden table." },
+                { word: "dinner", rule: "schwa_ending_er", sentence: "Our whole family sits down together to enjoy a hot evening __." },
+                { word: "swimmer", rule: "schwa_ending_er", sentence: "The elite Olympic __ swam laps across the pool incredibly fast." }
+            ]
+        },
+        {
+            title: "List 31: Prefix un- Layouts",
+            words: [
+                { word: "undo", rule: "prefix_un", sentence: "It is hard to __ a tight double knot once it has been pulled." },
+                { word: "untie", rule: "prefix_un", sentence: "Please assist me to __ the long strings on this birthday package." },
+                { word: "unsafe", rule: "prefix_un", sentence: "It is highly __ to run across a busy road without looking first." },
+                { word: "unlucky", rule: "prefix_un", sentence: "He felt quite __ when his ice cream scoop fell off the cone." },
+                { word: "undone", rule: "prefix_un", sentence: "I noticed that the zipper on your jacket has come completely __." },
+                { word: "unlock", rule: "prefix_un", sentence: "Dad used the silver front key to safely __ the house door." },
+                { word: "unfold", rule: "prefix_un", sentence: "Please carefully __ the large paper map on top of the desk." },
+                { word: "unkind", rule: "prefix_un", sentence: "It is very __ to exclude other children from playground games." },
+                { word: "unable", rule: "prefix_un", sentence: "The tiny bird was __ to fly away because its wing was hurt." },
+                { word: "uncover", rule: "prefix_un", sentence: "We managed to __ a buried chest while digging in the sand pit." },
+                { word: "unhappy", rule: "prefix_un", sentence: "The little girl felt very __ when her helium balloon floated away." },
+                { word: "unknown", rule: "prefix_un", sentence: "The deep uncharted ocean contains many mysterious, __ creatures." }
+            ]
+        },
+        {
+            title: "List 32: Suffixes -ly / -er / -est",
+            words: [
+                { word: "lovely", rule: "suffixes_ly_er_est", sentence: "We spent a absolutely __ afternoon picking fresh strawberries." },
+                { word: "loudly", rule: "suffixes_ly_er_est", sentence: "The thunder clapped __ directly above our mountain cabin." },
+                { word: "quickly", rule: "suffixes_ly_er_est", sentence: "The spotted cheetah sprinted __ across the open grassy plain." },
+                { word: "friendly", rule: "suffixes_ly_er_est", sentence: "Our next-door neighbors have a very __ golden retriever dog." },
+                { word: "sadly", rule: "suffixes_ly_er_est", sentence: "__, our fun school beach trip got postponed due to heavy rain." },
+                { word: "gladly", rule: "suffixes_ly_er_est", sentence: "I will __ help you clean up the messy art studio table." },
+                { word: "neatly", rule: "suffixes_ly_er_est", sentence: "Please stack your reading logs __ inside the plastic tub." },
+                { word: "suddenly", rule: "suffixes_ly_er_est", sentence: "A beautiful white rabbit __ popped its head out of the burrow." },
+                { word: "softly", rule: "suffixes_ly_er_est", sentence: "The mother spoke __ to her baby so he would fall asleep." },
+                { word: "finally", rule: "suffixes_ly_er_est", sentence: "After a long exhausting climb, we __ reached the hill top." },
+                { word: "nearly", rule: "suffixes_ly_er_est", sentence: "I have __ finished writing out all my weekly spelling words." },
+                { word: "safely", rule: "suffixes_ly_er_est", sentence: "The school crossing guard helped us walk __ across the street." },
+                { word: "bigger", rule: "suffixes_ly_er_est", sentence: "An ocean cargo ship is significantly __ than a tiny river canoe." },
+                { word: "biggest", rule: "suffixes_ly_er_est", sentence: "The blue whale holds the record for being the __ animal on Earth." },
+                { word: "smaller", rule: "suffixes_ly_er_est", sentence: "A tennis ball is much __ in physical size than a basketball." },
+                { word: "smallest", rule: "suffixes_ly_er_est", sentence: "The mouse was the absolute __ creature living inside the barn." },
+                { word: "louder", rule: "suffixes_ly_er_est", sentence: "Turn the radio up a bit __ so we can hear the morning news." },
+                { word: "loudest", rule: "suffixes_ly_er_est", sentence: "The stadium crowd made the absolute __ roar when a goal was scored." },
+                { word: "softer", rule: "suffixes_ly_er_est", sentence: "This new velvet pillow feels much __ than my old cotton one." },
+                { word: "softest", rule: "suffixes_ly_er_est", sentence: "The downy duckling feathers were the __ things I have ever felt." },
+                { word: "long", rule: "suffixes_ly_er_est", sentence: "The freight train was incredibly __ and took minutes to pass by." },
+                { word: "longer", rule: "suffixes_ly_er_est", sentence: "Summer days are much __ and brighter than cold winter days." },
+                { word: "longest", rule: "suffixes_ly_er_est", sentence: "The Nile River is recognized as the single __ river in the world." },
+                { word: "tall", rule: "suffixes_ly_er_est", sentence: "A massive __ redwood tree grew right near the park entrance." },
+                { word: "taller", rule: "suffixes_ly_er_est", sentence: "The school flag pole stands much __ than our gym building." },
+                { word: "tallest", rule: "suffixes_ly_er_est", sentence: "Giraffes are famously known as the __ land mammals alive." },
+                { word: "hard", rule: "suffixes_ly_er_est", sentence: "The solid concrete block felt very __ underneath our shoes." },
+                { word: "harder", rule: "suffixes_ly_er_est", sentence: "You must press down __ with the crayon to get a dark line." },
+                { word: "hardest", rule: "suffixes_ly_er_est", sentence: "This final puzzle question was definitely the __ one to solve." }
             ]
         },
         {
             title: "List 33: Trigraph 'tch'",
             words: [
-                { word: "catch", rule: "trigraph_tch_rule", sentence: "Get ready to __ the baseball in your glove when I throw it." },
-                { word: "match", rule: "trigraph_tch_rule", sentence: "We went down to the stadium to watch an exciting football __." },
-                { word: "stretch", rule: "trigraph_tch_rule", sentence: "It is important to safely __ your muscles before running a long race." },
-                { word: "pitch", rule: "trigraph_tch_rule", sentence: "The baseball player got ready to __ the ball straight to the batter." },
-                { word: "witch", rule: "trigraph_tch_rule", sentence: "The old spooky story described a friendly __ riding a magic broomstick." },
-                { word: "kitchen", rule: "trigraph_tch_rule", sentence: "Delicious baking smells drifted out from the warm cooking __." }
+                { word: "catch", rule: "trigraph_tch", sentence: "Hold out your baseball mitt to __ the ball cleanly." },
+                { word: "latch", rule: "trigraph_tch", sentence: "Make sure you lift the metal __ to open the garden gate." },
+                { word: "hutch", rule: "trigraph_tch", sentence: "Our pet rabbits sleep safely out in a wooden wire __." },
+                { word: "pitch", rule: "trigraph_tch", sentence: "The baseball player prepared to __ a fast strike to the batter." },
+                { word: "hatch", rule: "trigraph_tch", sentence: "We waited eagerly for the tiny bird egg to crack and __." },
+                { word: "fetch", rule: "trigraph_tch", sentence: "Our energetic puppy loves to run and __ the yellow tennis ball." },
+                { word: "ditch", rule: "trigraph_tch", sentence: "Rainwater filled up the deep drainage __ along the side road." },
+                { word: "stitch", rule: "trigraph_tch", sentence: "Mum added a single neat __ to mend the tear in my jeans." },
+                { word: "snatch", rule: "trigraph_tch", sentence: "The cheeky seagull swooped down to __ a chip from the bucket." },
+                { word: "hatchet", rule: "trigraph_tch", sentence: "The woodsman used a small __ to chop dry kindling for fuel." },
+                { word: "watch", rule: "trigraph_tch", sentence: "We sat down on the grass to __ the exciting soccer match." },
+                { word: "stretch", rule: "trigraph_tch", sentence: "It is smart to thoroughly __ your leg muscles before running." },
+                { word: "witch", rule: "trigraph_tch", sentence: "The old storybook described a powerful __ making magic potions." },
+                { word: "match", rule: "trigraph_tch", sentence: "We lit the holiday campfire using a single wooden strike __." },
+                { word: "kitchen", rule: "trigraph_tch", sentence: "Delicious baking aromas drifted straight out from the warm __." },
+                { word: "butcher", rule: "trigraph_tch", sentence: "We bought fresh sausages from the local neighborhood __ shop." },
+                { word: "ketchup", rule: "trigraph_tch", sentence: "I love to squeeze tomato __ over my hot oven chips." },
+                { word: "fetching", rule: "trigraph_tch", sentence: "Our friendly golden retriever is busy __ sticks from the lake." },
+                { word: "clutch", rule: "trigraph_tch", sentence: "The driver stepped on the truck __ pedal to shift gears smoothly." },
+                { word: "notch", rule: "trigraph_tch", sentence: "Grandpa carved a tiny V-shaped __ into the wooden stick marker." }
             ]
         }
     ];
@@ -190,14 +574,10 @@
     let activeLessonLabel = ""; let studentName = "";
     let correctWordsList = []; let incorrectWordsList = []; let correctCount = 0;
 
-    function resetToListMenu() {
-        currentStep = 0.5;
-        renderStep();
-    }
+    function resetToListMenu() { currentStep = 0.5; renderStep(); }
 
     function renderStep() {
         const card = document.getElementById('gameCard');
-        
         if (currentStep === 0) {
             card.innerHTML = `<h2>Year Three Vocabulary Station</h2><p style="font-size: 1.2rem;">Enter your name to begin:</p><input type="text" id="nameInput" class="student-input" placeholder="Your Name..."><br><button class="action-btn" onclick="submitName()">Enter Station</button>`;
             document.getElementById('nameInput').focus();
@@ -209,15 +589,7 @@
             card.innerHTML = `<h2>Welcome, ${studentName}!</h2><p style="font-size: 1.2rem; margin-bottom:10px;">Select your spelling list:</p><div class="menu-grid">${buttons}</div>`;
         } else {
             const currentData = activeLessonWords[currentWordIndex];
-            
-            let progressHTML = `
-                <div class="top-navigation-bar">
-                    <div class="nav-inner-layout">
-                        <span style="font-weight:bold; color:var(--primary); font-size:1.1rem;">${activeLessonLabel} &bull; Word ${currentWordIndex + 1} of ${activeLessonWords.length}</span>
-                        <button class="back-nav-btn" onclick="resetToListMenu()">⬅ Go Back to Lists</button>
-                    </div>
-                </div>`;
-                
+            let progressHTML = `<div class="top-navigation-bar"><div class="nav-inner-layout"><span style="font-weight:bold; color:var(--primary); font-size:1.1rem;">${activeLessonLabel} &bull; Word ${currentWordIndex + 1} of ${activeLessonWords.length}</span><button class="back-nav-btn" onclick="resetToListMenu()">⬅ Go Back to Lists</button></div></div>`;
             let ruleExplanation = MASTER_SPELLING_RULES[currentData.rule] || `💡 <strong>Pattern Rule:</strong> Focus on spelling your target words carefully!`;
 
             if (currentStep === 1) {
@@ -225,9 +597,7 @@
             } else if (currentStep === 2) {
                 let hint = currentWordIndex === 0 ? "The starting password is: <strong>tiger</strong>" : "Type the previous word you just spelled to unlock your notebook work!";
                 let correctPasswordValue = currentWordIndex === 0 ? "tiger" : activeLessonWords[currentWordIndex - 1].word;
-                
                 card.innerHTML = `${progressHTML}<div style="font-size: 1.4rem; font-weight: bold; color: var(--danger);">Notebook Practice</div><ol style="text-align: left; margin: 20px auto; max-width: 85%; font-size: 1.2rem; line-height: 1.6;"><li>Look closely at the word: <strong>${currentData.word}</strong></li><li>Write it down on paper 5 times.</li></ol><div class="lock-container"><label style="font-weight: bold; display:block; margin-bottom:5px;">Password Lock</label><span style="font-size:0.9rem; color:#64748b; display:block; margin-bottom:10px;">${hint}</span><input type="text" id="passInput" class="teacher-password-input" placeholder="Password..." autocomplete="off"><br><button id="lockBtn" style="margin-top:10px; padding: 8px 20px; background-color: var(--danger); border:none; color:white; font-weight:bold; border-radius:6px; cursor:pointer;">Unlock</button><div id="lockFeedback" class="feedback"></div></div>`;
-                
                 document.getElementById('passInput').focus();
                 document.getElementById('lockBtn').onclick = function() {
                     let enteredPass = document.getElementById('passInput').value.trim().toLowerCase().replace(/[^a-zA-Z0-9]/g, "");
@@ -245,51 +615,23 @@
     }
 
     function submitName() { const val = document.getElementById('nameInput').value.trim(); if(val) { studentName = val; currentStep = 0.5; renderStep(); } }
-    
-    function launchRuleByIndex(index) { 
-        const selectedList = DATA_LISTS[index];
-        activeLessonWords = selectedList.words; 
-        activeLessonLabel = selectedList.title; 
-        currentWordIndex = 0; 
-        correctWordsList = []; 
-        incorrectWordsList = []; 
-        correctCount = 0; 
-        currentStep = 1; 
-        renderStep(); 
-    }
-    
+    function launchRuleByIndex(index) { const selectedList = DATA_LISTS[index]; activeLessonWords = selectedList.words; activeLessonLabel = selectedList.title; currentWordIndex = 0; correctWordsList = []; incorrectWordsList = []; correctCount = 0; currentStep = 1; renderStep(); }
     function nextStep() { currentStep++; renderStep(); }
     
     function checkTestAnswer() {
         const originalEntered = document.getElementById('testInput').value.trim();
-        const enteredEvaluated = originalEntered.toLowerCase().replace(/[^a-zA-Z-]/g, "");
-        const correctEvaluated = activeLessonWords[currentWordIndex].word.toLowerCase().replace(/[^a-zA-Z-]/g, "");
-        
-        if(enteredEvaluated === correctEvaluated) { 
-            correctCount++; 
-            correctWordsList.push(activeLessonWords[currentWordIndex].word); 
-        } else { 
-            incorrectWordsList.push(`${originalEntered || '[Blank]'} (${activeLessonWords[currentWordIndex].word})`); 
-        }
-        
+        const enteredEvaluated = originalEntered.toLowerCase().replace(/[^a-zA-Z'-]/g, "");
+        const correctEvaluated = activeLessonWords[currentWordIndex].word.toLowerCase().replace(/[^a-zA-Z'-]/g, "");
+        if(enteredEvaluated === correctEvaluated) { correctCount++; correctWordsList.push(activeLessonWords[currentWordIndex].word); } 
+        else { incorrectWordsList.push(`${originalEntered || '[Blank]'} (${activeLessonWords[currentWordIndex].word})`); }
         const fb = document.getElementById('testFeedback');
         fb.className = enteredEvaluated === correctEvaluated ? "feedback success" : "feedback error";
         fb.innerHTML = enteredEvaluated === correctEvaluated ? "Correct!" : `Incorrect. Spelling is "${activeLessonWords[currentWordIndex].word}".`;
-        
         setTimeout(() => { if (currentWordIndex < activeLessonWords.length - 1) { currentWordIndex++; currentStep = 1; renderStep(); } else { showEndScreen(); } }, 2200);
     }
 
     function showEndScreen() {
-        document.getElementById('gameCard').innerHTML = `
-            <div class="top-navigation-bar">
-                <div class="nav-inner-layout" style="justify-content: flex-end;">
-                    <button class="back-nav-btn" onclick="resetToListMenu()">🏠 Home Menu</button>
-                </div>
-            </div>
-            <h1 style="color: var(--success);">Practice Complete</h1>
-            <p>Great job, ${studentName}!</p>
-            <p>Score: <strong>${correctCount} out of ${activeLessonWords.length}</strong></p>
-            <div id="submissionZone"><button class="action-btn" onclick="openGoogleFormLink()">Send Progress Form</button></div>`;
+        document.getElementById('gameCard').innerHTML = `<div class="top-navigation-bar"><div class="nav-inner-layout" style="justify-content: flex-end;"><button class="back-nav-btn" onclick="resetToListMenu()">🏠 Home Menu</button></div></div><h1 style="color: var(--success);">Practice Complete</h1><p>Great job, ${studentName}!</p><p>Score: <strong>${correctCount} out of ${activeLessonWords.length}</strong></p><div id="submissionZone"><button class="action-btn" onclick="openGoogleFormLink()">Send Progress Form</button></div>`;
     }
 
     function openGoogleFormLink() {
